@@ -1,0 +1,16 @@
+[package]
+name = "caliptra-api-c-binding-proc-literal"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+proc-macro = true
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+caliptra-api.workspace = true
+syn = "2"
+
+[features]
+"hw-1.0" = ["caliptra-api/hw-1.0"]

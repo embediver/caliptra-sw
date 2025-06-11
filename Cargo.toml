@@ -27,6 +27,8 @@ exclude = [
 members = [
   "api",
   "api/types",
+  "api/c-binding",
+  "api/c-binding/proc-literal",
   "auth-manifest/app",
   "auth-manifest/gen",
   "auth-manifest/types",

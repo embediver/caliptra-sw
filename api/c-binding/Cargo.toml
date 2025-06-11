@@ -1,0 +1,19 @@
+# Licensed under the Apache-2.0 license
+
+[package]
+name = "caliptra-api-c-binding"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+caliptra-api.workspace = true
+caliptra-api-c-binding-proc-literal = { path = "./proc-literal" }
+
+[lib]
+crate-type = ["staticlib"]
+
+[features]
+"hw-1.0" = ["caliptra-api/hw-1.0"]
+
+[build-dependencies]
+cbindgen.workspace = true
