@@ -1,0 +1,12 @@
+language = "C"
+header = "// Licensed under the Apache-2.0 license"
+include_guard = "CALIPTRA_API_C_BINDING_H"
+cpp_compat = true
+
+[export]
+include = [
+"MailboxReqHeader",
+"MailboxRespHeader",
+"AddSubjectAltNameReq",
+"CommandId",
+]

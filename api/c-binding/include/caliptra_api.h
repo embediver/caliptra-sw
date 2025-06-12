@@ -74,6 +74,4 @@ typedef enum mailbox_command {
   REVOKE_EXPORTED_CDI_HANDLE = 1381385032,
 } mailbox_command;
 
-typedef MailboxRespHeader mailbox_response_header;
-
 #endif /* CALIPTRA_API_C_BINDING_H */
