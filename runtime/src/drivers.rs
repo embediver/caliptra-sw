@@ -112,6 +112,37 @@ pub struct Drivers {
 }
 
 impl Drivers {
+    pub fn initialize_dpe_env(&mut self) -> CaliptraResult<DpeEnv<CptraDpeTypes>> {
+        let hashed_rt_pub_key = self.compute_rt_alias_sn()?;
+        let key_id_rt_cdi = Drivers::get_key_id_rt_cdi(self)?;
+        let key_id_rt_priv_key = Drivers::get_key_id_rt_priv_key(self)?;
+        let pdata = self.persistent_data.get_mut();
+        let mut crypto = DpeCrypto::new(
+            &mut self.sha384,
+            &mut self.trng,
+            &mut self.ecc384,
+            &mut self.hmac384,
+            &mut self.key_vault,
+            &mut pdata.fht.rt_dice_pub_key,
+            key_id_rt_cdi,
+            key_id_rt_priv_key,
+            &mut pdata.exported_cdi_slots,
+        );
+        let (nb, nf) = Drivers::get_cert_validity_info(&pdata.manifest1);
+        let mut env = DpeEnv::<CptraDpeTypes> {
+            crypto,
+            platform: DpePlatform::new(
+                pdata.manifest1.header.pl0_pauser,
+                &hashed_rt_pub_key,
+                &self.cert_chain,
+                &nb,
+                &nf,
+                None,
+                None,
+            ),
+        };
+        Ok(env)
+    }
     /// # Safety
     ///
     /// Callers must ensure that this function is called only once, and that
