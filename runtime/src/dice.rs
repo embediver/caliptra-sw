@@ -12,6 +12,8 @@ Abstract:
 
 --*/
 
+//! Contains mailbox commands related to DICE certificates
+
 use caliptra_common::mailbox_api::{
     GetFmcAliasCertResp, GetIdevCertReq, GetIdevCertResp, GetLdevCertResp, GetRtAliasCertResp,
     MailboxResp, MailboxRespHeader,

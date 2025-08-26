@@ -12,10 +12,13 @@ Abstract:
 
 --*/
 
+//! Contains helper functions that extract values from the FirmwareHandoffTable and DataVault
+
 use caliptra_common::DataStore::{DataVaultNonSticky4, DataVaultSticky4, KeyVaultSlot};
 use caliptra_drivers::{hand_off::DataStore, DataVault, FirmwareHandoffTable, KeyId};
 use caliptra_error::{CaliptraError, CaliptraResult};
 
+/// Structure that holds a referece to the [`DataVault`](DataVault) and [`FirmwareHandoffTable`](FirmwareHandoffTable)
 pub struct RtHandoff<'a> {
     pub data_vault: &'a DataVault,
     pub fht: &'a FirmwareHandoffTable,

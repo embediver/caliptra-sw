@@ -11,6 +11,9 @@ Abstract:
     File contains main entry point for Caliptra Test Runtime
 
 --*/
+
+//! Main entry point for Caliptra Test Runtime
+
 #![cfg_attr(not(feature = "std"), no_std)]
 #![cfg_attr(not(feature = "std"), no_main)]
 

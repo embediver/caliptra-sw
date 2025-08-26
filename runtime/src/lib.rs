@@ -11,6 +11,9 @@ Abstract:
     File contains exports for the Runtime library and mailbox command handling logic.
 
 --*/
+
+//! Contains exports for the Runtime library and mailbox command handling logic
+
 #![cfg_attr(not(feature = "fip-self-test"), allow(unused))]
 #![no_std]
 mod authorize_and_stash;

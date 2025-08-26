@@ -12,6 +12,8 @@ Abstract:
 
 --*/
 
+//! Access to hardware drivers and driver initalization
+
 #![cfg_attr(not(feature = "fip-self-test"), allow(unused))]
 
 #[cfg(feature = "fips_self_test")]
@@ -68,6 +70,7 @@ pub enum PauserPrivileges {
     PL1,
 }
 
+/// Hardware drivers and associated functionality
 pub struct Drivers {
     pub mbox: Mailbox,
     pub sha_acc: Sha512AccCsr,
@@ -76,7 +79,7 @@ pub struct Drivers {
     pub soc_ifc: SocIfc,
     pub sha256: Sha256,
 
-    // SHA2-384 Engine
+    /// SHA2-384 Engine
     pub sha384: Sha384,
 
     // SHA2-512/384 Accelerator

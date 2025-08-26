@@ -12,6 +12,8 @@ Abstract:
 
 --*/
 
+//! Mailbox peripheral interface
+
 use core::mem::size_of;
 use core::slice;
 
@@ -25,6 +27,7 @@ use zerocopy::{FromBytes, IntoBytes, Unalign};
 
 use crate::CommandId;
 
+/// Mailbox peripheral and associated functionality
 pub struct Mailbox {
     mbox: MboxCsr,
 }

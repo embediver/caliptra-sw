@@ -12,12 +12,15 @@ Abstract:
 
 --*/
 
+//! API that reads commands and writes responses to the mailbox.
+
 use caliptra_drivers::CaliptraResult;
 
 use caliptra_common::mailbox_api::{MailboxReqHeader, MailboxResp};
 use caliptra_drivers::CaliptraError;
 use zerocopy::{FromBytes, IntoBytes};
 
+/// A packet mailbox data Packet
 #[derive(Debug, Clone)]
 pub struct Packet {
     pub cmd: u32,

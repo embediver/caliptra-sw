@@ -11,6 +11,9 @@ Abstract:
     File contains FIPS module and FIPS self test.
 
 --*/
+
+//! Contains FIPS module and FIPS self test
+
 use caliptra_cfi_derive_git::{cfi_impl_fn, cfi_mod_fn};
 use caliptra_common::cprintln;
 use caliptra_common::mailbox_api::{MailboxResp, MailboxRespHeader};

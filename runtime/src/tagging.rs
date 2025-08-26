@@ -12,6 +12,8 @@ Abstract:
 
 --*/
 
+//! Commands dealing with tagging.
+
 use crate::CfiCounter;
 use caliptra_cfi_derive_git::cfi_impl_fn;
 use caliptra_common::mailbox_api::{
@@ -28,6 +30,7 @@ use zerocopy::FromBytes;
 
 use crate::{dpe_crypto::DpeCrypto, CptraDpeTypes, DpePlatform, Drivers};
 
+/// DPE_TAG_TCI (`TAGT`) command
 pub struct TagTciCmd;
 impl TagTciCmd {
     #[cfg_attr(not(feature = "no-cfi"), cfi_impl_fn)]
@@ -67,6 +70,7 @@ impl TagTciCmd {
     }
 }
 
+/// DPE_GET_TAGGED_TCI (`GTGD`) command
 pub struct GetTaggedTciCmd;
 impl GetTaggedTciCmd {
     #[cfg_attr(not(feature = "no-cfi"), cfi_impl_fn)]

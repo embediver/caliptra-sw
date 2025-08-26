@@ -12,12 +12,15 @@ Abstract:
 
 --*/
 
+//! Capabilities mailbox command
+
 use caliptra_common::{
     capabilities::Capabilities,
     mailbox_api::{CapabilitiesResp, MailboxResp, MailboxRespHeader},
 };
 use caliptra_error::CaliptraResult;
 
+/// CAPABILITIES (`CAPS`) command
 pub struct CapabilitiesCmd;
 impl CapabilitiesCmd {
     #[inline(never)]

@@ -12,11 +12,14 @@ Abstract:
 
 --*/
 
+//! Mailbox commands to retrieve info about state of the Runtime firmware.
+
 use crate::{handoff::RtHandoff, Drivers};
 use caliptra_common::mailbox_api::{FwInfoResp, GetIdevInfoResp, MailboxResp, MailboxRespHeader};
 use caliptra_drivers::CaliptraResult;
 use caliptra_image_types::RomInfo;
 
+/// FW_INFO (`INFO`) command
 pub struct FwInfoCmd;
 impl FwInfoCmd {
     #[inline(never)]
@@ -52,6 +55,7 @@ impl FwInfoCmd {
     }
 }
 
+/// GET_IDEV_INFO (`IDEI`) command
 pub struct IDevIdInfoCmd;
 impl IDevIdInfoCmd {
     #[inline(never)]
