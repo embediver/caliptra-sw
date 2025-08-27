@@ -12,6 +12,8 @@ Abstract:
 
 --*/
 
+//! SHA-256 hardware driver
+
 use core::usize;
 
 use crate::{array::Array4x16, wait, Array4x8, CaliptraError, CaliptraResult};
@@ -45,6 +47,7 @@ pub trait Sha256Alg {
     fn digest(&mut self, buf: &[u8]) -> CaliptraResult<Array4x8>;
 }
 
+/// SHA-256 hardware driver
 pub struct Sha256 {
     sha256: Sha256Reg,
 }

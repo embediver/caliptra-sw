@@ -223,6 +223,7 @@ const _: () = assert!(
 );
 const _: () = assert!(size_of::<IdevIdCsr>() <= IDEVID_CSR_SIZE as usize);
 
+/// Persistent data, usually accessed through [PersistentDataAccessor]
 #[derive(TryFromBytes, IntoBytes, KnownLayout, Zeroize)]
 #[repr(C)]
 pub struct PersistentData {
@@ -440,6 +441,9 @@ impl PersistentDataAccessor {
     }
 }
 
+/// Create a ref from address
+///
+/// Asserts that `addr` is aligned correctly, has the correct size, and is not _zero_.
 #[inline(always)]
 unsafe fn ref_from_addr<'a, T: TryFromBytes>(addr: u32) -> &'a T {
     // LTO should be able to optimize out the assertions to maintain panic_is_missing
@@ -451,6 +455,9 @@ unsafe fn ref_from_addr<'a, T: TryFromBytes>(addr: u32) -> &'a T {
     &*(addr as *const T)
 }
 
+/// Create a mutable ref from address
+///
+/// Asserts that `addr` is aligned correctly, has the correct size, and is not _zero_.
 #[inline(always)]
 unsafe fn ref_mut_from_addr<'a, T: TryFromBytes>(addr: u32) -> &'a mut T {
     // LTO should be able to optimize out the assertions to maintain panic_is_missing

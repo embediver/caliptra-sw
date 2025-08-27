@@ -12,6 +12,8 @@ Abstract:
 
 --*/
 
+//! Constants that describe the memory layout
+
 //
 // Memory Addresses
 //
