@@ -112,7 +112,11 @@ pub struct Drivers {
 }
 
 impl Drivers {
-    pub fn initialize_dpe_env(&mut self) -> CaliptraResult<DpeEnv<CptraDpeTypes>> {
+    pub fn initialize_dpe_env(
+        &mut self,
+        with_dmtf_device_info: bool,
+        with_ueid: bool,
+    ) -> CaliptraResult<DpeEnv<CptraDpeTypes>> {
         let hashed_rt_pub_key = self.compute_rt_alias_sn()?;
         let key_id_rt_cdi = Drivers::get_key_id_rt_cdi(self)?;
         let key_id_rt_priv_key = Drivers::get_key_id_rt_priv_key(self)?;
@@ -129,16 +133,28 @@ impl Drivers {
             &mut pdata.exported_cdi_slots,
         );
         let (nb, nf) = Drivers::get_cert_validity_info(&pdata.manifest1);
+        let dmtf_device_info = if with_dmtf_device_info {
+            self.dmtf_device_info
+                .as_ref()
+                .map(|dmtf_device_info| dmtf_device_info.as_bytes())
+        } else {
+            None
+        };
+        let ueid = if with_ueid {
+            Some(self.soc_ifc.fuse_bank().ueid())
+        } else {
+            None
+        };
         let mut env = DpeEnv::<CptraDpeTypes> {
             crypto,
             platform: DpePlatform::new(
                 pdata.manifest1.header.pl0_pauser,
-                &hashed_rt_pub_key,
+                hashed_rt_pub_key,
                 &self.cert_chain,
-                &nb,
-                &nf,
-                None,
-                None,
+                nb,
+                nf,
+                dmtf_device_info,
+                ueid,
             ),
         };
         Ok(env)
@@ -424,10 +440,10 @@ impl Drivers {
             crypto,
             platform: DpePlatform::new(
                 caliptra_locality,
-                &hashed_rt_pub_key,
+                hashed_rt_pub_key,
                 &drivers.cert_chain,
-                &nb,
-                &nf,
+                nb,
+                nf,
                 None,
                 None,
             ),

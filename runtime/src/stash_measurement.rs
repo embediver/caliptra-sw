@@ -69,10 +69,10 @@ impl StashMeasurementCmd {
                 crypto,
                 platform: DpePlatform::new(
                     pdata.manifest1.header.pl0_pauser,
-                    &hashed_rt_pub_key,
+                    hashed_rt_pub_key,
                     &drivers.cert_chain,
-                    &nb,
-                    &nf,
+                    nb,
+                    nf,
                     None,
                     None,
                 ),

@@ -64,15 +64,15 @@ impl InvokeDpeCmd {
             );
             let pl0_pauser = pdata.manifest1.header.pl0_pauser;
             let (nb, nf) = Drivers::get_cert_validity_info(&pdata.manifest1);
-            let ueid = &drivers.soc_ifc.fuse_bank().ueid();
+            let ueid = drivers.soc_ifc.fuse_bank().ueid();
             let mut env = DpeEnv::<CptraDpeTypes> {
                 crypto,
                 platform: DpePlatform::new(
                     pl0_pauser,
-                    &hashed_rt_pub_key,
+                    hashed_rt_pub_key,
                     &drivers.cert_chain,
-                    &nb,
-                    &nf,
+                    nb,
+                    nf,
                     None,
                     Some(ueid),
                 ),

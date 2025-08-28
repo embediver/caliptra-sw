@@ -70,18 +70,19 @@ impl CertifyKeyExtendedCmd {
         } else {
             None
         };
-        let mut env = DpeEnv::<CptraDpeTypes> {
-            crypto,
-            platform: DpePlatform::new(
-                pl0_pauser,
-                &hashed_rt_pub_key,
-                &drivers.cert_chain,
-                &nb,
-                &nf,
-                dmtf_device_info,
-                None,
-            ),
-        };
+        // let mut env = DpeEnv::<CptraDpeTypes> {
+        //     crypto,
+        //     platform: DpePlatform::new(
+        //         pl0_pauser,
+        //         hashed_rt_pub_key,
+        //         &drivers.cert_chain,
+        //         nb,
+        //         nf,
+        //         dmtf_device_info,
+        //         None,
+        //     ),
+        // };
+        let mut env = drivers.initialize_dpe_env(true, false)?;
 
         let mut dpe = &mut pdata.dpe;
         let certify_key_cmd = CertifyKeyCmd::ref_from_bytes(&cmd.certify_key_req[..])

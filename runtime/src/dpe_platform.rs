@@ -12,7 +12,7 @@ Abstract:
 
 --*/
 
-use core::cmp::min;
+use core::{cmp::min, ops::Deref};
 
 use arrayvec::ArrayVec;
 use caliptra_drivers::cprintln;
@@ -34,12 +34,12 @@ use crate::{subject_alt_name::AddSubjectAltNameCmd, MAX_CERT_CHAIN_SIZE};
 
 pub struct DpePlatform<'a> {
     auto_init_locality: u32,
-    hashed_rt_pub_key: &'a Digest,
+    hashed_rt_pub_key: Digest,
     cert_chain: &'a ArrayVec<u8, MAX_CERT_CHAIN_SIZE>,
-    not_before: &'a NotBefore,
-    not_after: &'a NotAfter,
+    not_before: NotBefore,
+    not_after: NotAfter,
     dmtf_device_info: Option<&'a [u8]>,
-    ueid: Option<&'a [u8; 17]>,
+    ueid: Option<[u8; 17]>,
 }
 
 pub const VENDOR_ID: u32 = u32::from_be_bytes(*b"CTRA");
@@ -48,12 +48,12 @@ pub const VENDOR_SKU: u32 = u32::from_be_bytes(*b"CTRA");
 impl<'a> DpePlatform<'a> {
     pub fn new(
         auto_init_locality: u32,
-        hashed_rt_pub_key: &'a Digest,
+        hashed_rt_pub_key: Digest,
         cert_chain: &'a ArrayVec<u8, 4096>,
-        not_before: &'a NotBefore,
-        not_after: &'a NotAfter,
+        not_before: NotBefore,
+        not_after: NotAfter,
         dmtf_device_info: Option<&'a [u8]>,
-        ueid: Option<&'a [u8; 17]>,
+        ueid: Option<[u8; 17]>,
     ) -> Self {
         Self {
             auto_init_locality,
@@ -116,7 +116,8 @@ impl Platform for DpePlatform<'_> {
 
         // Caliptra RDN SerialNumber field is always a Sha256 hash
         let mut serial = [0u8; 64];
-        Digest::write_hex_str(self.hashed_rt_pub_key, &mut serial)
+        self.hashed_rt_pub_key
+            .write_hex_str(&mut serial)
             .map_err(|e| PlatformError::IssuerNameError(e.get_error_detail().unwrap_or(0)))?;
 
         let name = Name {
@@ -196,11 +197,11 @@ impl Platform for DpePlatform<'_> {
     }
 
     fn get_ueid(&mut self) -> Result<Ueid, PlatformError> {
-        let buf = *self.ueid.ok_or(PlatformError::MissingUeidError)?;
+        let buf = self.ueid.as_ref().ok_or(PlatformError::MissingUeidError)?;
         let buf_size = buf.len() as u32;
 
         let mut ueid = Ueid::default();
-        ueid.buf[..buf_size as usize].clone_from_slice(&buf);
+        ueid.buf[..buf_size as usize].clone_from_slice(buf);
         ueid.buf_size = buf_size;
 
         Ok(ueid)
